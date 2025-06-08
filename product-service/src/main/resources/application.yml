@@ -1,0 +1,69 @@
+server:
+  port: 8084
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  metrics:
+    export:
+      prometheus: {}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+  endpoint:
+    prometheus:
+      enabled: true
+spring:
+  application:
+    name: product-service
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    base-url: http://localhost:9411
+  cloud:
+    stream:
+      bindings:
+        orderEvents-in-0:
+          destination: order-events
+          content-type: application/*+avro
+          group: product-group
+          consumer:
+            use-native-decoding: true
+            max-attempts: 5
+            back-off-initial-interval: 1000
+            back-off-max-interval: 10000
+            back-off-multiplier: 2.0
+        productEvents-out-0:
+          destination: product-events
+          content-type: application/*+avro
+          producer:
+            use-native-encoding: true
+
+      kafka:
+        bindings:
+          orderEvents-in-0:
+            consumer:
+              enable-dlq: true
+              dlq-name: order-events-dlq-product
+        binder:
+          brokers: localhost:9092
+          schema-registry-url: http://localhost:8081
+          consumer-properties:
+            key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+            schema.registry.url: http://localhost:8081
+            specific.avro.reader: true
+            auto.offset.reset: earliest
+          # Configuraciones espec�ficas del producer
+          producer-properties:
+            key.serializer: org.apache.kafka.common.serialization.StringSerializer
+            value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+            schema.registry.url: http://localhost:8081
+            auto.register.schemas: true
+            use.latest.version: true
+logging:
+  level:
+    org.springframework.kafka.support.serializer: DEBUG
+    org.apache.avro: DEBUG

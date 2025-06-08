@@ -1,0 +1,57 @@
+{
+  "namespace": "com.ecommerce.events",
+  "type": "record",
+  "name": "OrderEvent",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string"
+    },
+    {
+      "name": "eventType",
+      "type": {
+        "name": "OrderEventType",
+        "type": "enum",
+        "symbols": ["ORDER_CREATED", "ORDER_CONFIRMED", "ORDER_CANCELLED", "ORDER_COMPLETED"]
+      }
+    },
+    {
+      "name": "orderId",
+      "type": "string"
+    },
+    {
+      "name": "customerId",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "totalAmount",
+      "type": "double"
+    },
+    {
+      "name": "items",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "OrderItem",
+          "type": "record",
+          "fields": [
+            {"name": "productId", "type": "string"},
+            {"name": "quantity", "type": "int"},
+            {"name": "unitPrice", "type": "double"},
+            {"name": "totalPrice", "type": "double"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "timestamp",
+      "type": "long"
+    },
+    {
+      "name": "sagaId",
+      "type": ["null", "string"],
+      "default": null
+    }
+  ]
+}

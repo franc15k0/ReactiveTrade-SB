@@ -1,0 +1,47 @@
+{
+  "namespace": "com.ecommerce.events",
+  "type": "record",
+  "name": "ProductEvent",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string"
+    },
+    {
+      "name": "eventType",
+      "type": {
+        "name": "ProductEventType",
+        "type": "enum",
+        "symbols": ["STOCK_RESERVED", "STOCK_RELEASED", "STOCK_INSUFFICIENT", "STOCK_UPDATED"]
+      }
+    },
+    {
+      "name": "productId",
+      "type": "string"
+    },
+    {
+      "name": "quantity",
+      "type": "int"
+    },
+    {
+      "name": "orderId",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "timestamp",
+      "type": "long"
+    },
+    {
+      "name": "sagaId",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "availableStock",
+      "type": ["null", "int"],
+      "default": null
+    },
+    { "name": "reason", "type": ["null", "string"], "default": null }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "namespace": "com.ecommerce.events",
+  "type": "record",
+  "name": "PaymentEvent",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string"
+    },
+    {
+      "name": "eventType",
+      "type": {
+        "name": "PaymentEventType",
+        "type": "enum",
+        "symbols": ["PAYMENT_REQUESTED", "PAYMENT_PROCESSED", "PAYMENT_FAILED", "PAYMENT_REFUNDED"]
+      }
+    },
+    {
+      "name": "paymentId",
+      "type": "string"
+    },
+    {
+      "name": "orderId",
+      "type": "string"
+    },
+    {
+      "name": "amount",
+      "type": "double"
+    },
+    {
+      "name": "paymentMethod",
+      "type": "string"
+    },
+    {
+      "name": "transactionId",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "timestamp",
+      "type": "long"
+    },
+    {
+      "name": "sagaId",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "failureReason",
+      "type": ["null", "string"],
+      "default": null
+    }
+  ]
+}

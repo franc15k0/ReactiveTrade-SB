@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: reporting-functional-service
+
+
+  cloud:
+    function:
+      definition: orderReport;paymentRequestReport;paymentResponseReport;productReport
+
+    stream:
+      bindings:
+        orderReport-in-0:
+          destination: order-events
+          group: reporting-service
+          contentType: application/*+avro
+        paymentRequestReport-in-0:
+          destination: payment-request-events
+          group: reporting-service
+          contentType: application/*+avro
+        paymentResponseReport-in-0:
+          destination: payment-response-events
+          group: reporting-service
+          contentType: application/*+avro
+        productReport-in-0:
+          destination: product-events
+          group: reporting-service
+          contentType: application/*+avro
+
+  kafka:
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+    properties:
+      schema.registry.url: http://localhost:8081
+      specific.avro.reader: true
