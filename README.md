@@ -47,5 +47,5 @@ docker-compose up -d
 Desarrollado por **Francisco Bazan**
 
 - 💼 [LinkedIn](https://www.linkedin.com/in/francisco-bazan-286abb7a/)
-- 💻 [GitHub](https://github.com/juanperezdev)
-  - ✉️ fbazanm@gmail.com
+- 💻 [GitHub](https://github.com/franc15k0)
+- ✉️ fbazanm@gmail.com
